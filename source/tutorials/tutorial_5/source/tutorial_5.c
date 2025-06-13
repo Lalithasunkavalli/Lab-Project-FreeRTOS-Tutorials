@@ -56,7 +56,9 @@ int main( void )
      *
      * Assign the return value to xTaskCreationResult.
      */
+    xTaskCreationResult = xTaskCreate( prvTaskFunction, "Task1", configMINIMAL_STACK_SIZE, ( void * ) 1, tskIDLE_PRIORITY, NULL );
     configASSERT( xTaskCreationResult == pdPASS );
+
 
     /* TODO 2 - Create a FreeRTOS task using xTaskCreate API which
      * uses prvTaskFunction as the task function.
@@ -71,7 +73,9 @@ int main( void )
      *
      * Assign the return value to xTaskCreationResult.
      */
+     xTaskCreationResult = xTaskCreate( prvTaskFunction, "Task2", configMINIMAL_STACK_SIZE, ( void * ) 2, tskIDLE_PRIORITY, NULL );
     configASSERT( xTaskCreationResult == pdPASS );
+
 
     /* Start the scheduler. */
     vTaskStartScheduler();
