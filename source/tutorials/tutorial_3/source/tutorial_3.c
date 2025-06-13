@@ -64,10 +64,11 @@ int main( void )
      *
      * Assign the return value to xCreatedTaskHandle.
      */
+    xCreatedTaskHandle = xTaskCreateStatic( prvTaskFunction, "Task1", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, &( xTaskStackBuffer[ 0 ] ), &( xTaskTcbBuffer ) );
     configASSERT( xCreatedTaskHandle != NULL );
 
     /* TODO 2 - Call vTaskStartScheduler to start the scheduler. */
-
+    vTaskStartScheduler();
     /* Should not reach here. */
     for( ;; )
     {

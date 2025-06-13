@@ -57,9 +57,13 @@ int main( void )
      * Assign the return value to xTaskCreationResult.
      */
 
+    xTaskCreationResult = xTaskCreate( prvTaskFunction, "Task", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL ); 
     configASSERT( xTaskCreationResult == pdPASS );
 
+    printf( "Tutorial 2: Task created successfully.\r\n" );
+    fflush( stdout );
     /* TODO 2 - Call vTaskStartScheduler to start the scheduler. */
+    vTaskStartScheduler();
 
     /* Should not reach here. */
     for( ;; )
@@ -79,8 +83,8 @@ static void prvTaskFunction( void * pvParams )
 
     for( ;; )
     {
-        fprintf( stderr, "Tutorial 2 running...\r\n" );
-
+        fprintf( stdout, "Tutorial 2 running...\r\n" );
+        fflush( stdout );
         /* Pause for a second. */
         vTaskDelay( pdMS_TO_TICKS( 1000 ) );
     }
