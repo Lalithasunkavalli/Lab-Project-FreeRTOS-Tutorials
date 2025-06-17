@@ -29,11 +29,14 @@
 /**
  * @brief Tutorial entry point.
  */
+int count = 1;
 int main( void )
+
 {
-    for( ; ; )
+    
+    for(int  i=1;i<=10;i++ )
     {
-        fprintf( stderr, "Tutorial 1 running...\r\n" );
+        fprintf( stderr, "Tutorial 1 running... %d \r\n", count++ );
 
         /* Sleep for a second. */
         sleep( 1 );

@@ -57,7 +57,7 @@ int main( void )
      *
      * Assign the return value to xTaskCreationResult.
      */
-    xTaskCreationResult = xTaskCreate( prvHighPriorityTaskFunction, "High", configMINIMAL_STACK_SIZE, NULL, 5, NULL );
+    xTaskCreationResult = xTaskCreate( prvHighPriorityTaskFunction, "High", configMINIMAL_STACK_SIZE, NULL, 4, NULL );
     configASSERT( xTaskCreationResult == pdPASS );
 
     /* TODO 2 - Create a FreeRTOS task using xTaskCreate API which
@@ -99,15 +99,13 @@ static void prvHighPriorityTaskFunction( void * pvParams )
 
     for( ;; )
     {
-        fprintf( stderr, "Tutorial 4 high priority task running...\r\n" );
+        fprintf( stderr, "***************  Tutorial 4 task 2  task running**************************\r\n" );
 
-        for( i = 0; i < 10000; i++ )
+        for( i = 0; i < 1000000000; i++ )
         {
             /* This loop is just a very crude delay implementation. */
         }
-        fprintf( stderr, "Tutorial 4 high priority task yielding...\r\n" );
-        /* Yield to allow the low priority task to run. */
-        vTaskDelay( pdMS_TO_TICKS( 10) );
+        // fprintf( stderr, "Tutorial 4 high priority task yielding...\r\n" );
     }
 }
 /*-----------------------------------------------------------*/
@@ -121,7 +119,7 @@ static void prvLowPriorityTaskFunction( void * pvParams )
 
     for( ;; )
     {
-        fprintf( stderr, "***************  Tutorial 4 low priority task running**************************\r\n" );
+        fprintf( stderr, "***************  Tutorial 4 task 1  task running**************************\r\n" );
 
         for( i = 0; i < 1000000000; i++ )
         {

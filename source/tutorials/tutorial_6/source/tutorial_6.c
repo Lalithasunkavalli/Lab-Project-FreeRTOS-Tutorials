@@ -84,7 +84,7 @@ static void prvTask1Function( void * pvParams )
     for( ;; )
     {
         fprintf( stderr, "Tutorial 6 task 1 running...\r\n" );
-
+    
         for( i = 0; i < 100000000; i++ )
         {
             /* This loop is just a very crude delay implementation. */
@@ -102,7 +102,7 @@ static void prvTask2Function( void * pvParams )
 
     for( ;; )
     {
-        fprintf( stderr, "Tutorial 6 task 2 running...\r\n" );
+        fprintf( stderr, "_________________Tutorial 6 task 2 running................................\r\n" );
 
         for( i = 0; i < 100000000; i++ )
         {

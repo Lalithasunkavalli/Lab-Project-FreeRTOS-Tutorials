@@ -48,7 +48,7 @@ int main( void )
                                        "Task1",
                                        configMINIMAL_STACK_SIZE,
                                        NULL,
-                                       tskIDLE_PRIORITY,
+                                       3,
                                        NULL );
     configASSERT( xTaskCreationResult == pdPASS );
 
@@ -78,7 +78,7 @@ static void prvTask1Function( void * pvParams )
                                        "Task2",
                                        configMINIMAL_STACK_SIZE,
                                        NULL,
-                                       tskIDLE_PRIORITY,
+                                       2,
                                        NULL );
     configASSERT( xTaskCreationResult == pdPASS );
 
@@ -90,6 +90,7 @@ static void prvTask1Function( void * pvParams )
         {
             /* This loop is just a very crude delay implementation. */
         }
+         vTaskDelay ( pdMS_TO_TICKS( 100 ) );
     }
 }
 /*-----------------------------------------------------------*/
@@ -103,12 +104,13 @@ static void prvTask2Function( void * pvParams )
 
     for( ;; )
     {
-        fprintf( stderr, "Tutorial 7 task 2 running...\r\n" );
+        fprintf( stderr, "******************Tutorial 7 task 2 running...\r\n" );
 
         for( i = 0; i < 100000000; i++ )
         {
             /* This loop is just a very crude delay implementation. */
         }
+       // vTaskDelay ( pdMS_TO_TICKS( 100 ) );
     }
 }
 /*-----------------------------------------------------------*/

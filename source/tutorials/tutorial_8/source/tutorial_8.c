@@ -1,3 +1,4 @@
+
 /*
  * FreeRTOS-Tutorials
  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
@@ -78,7 +79,7 @@ static void prvTask1Function( void * pvParams )
                                        "Task2",
                                        configMINIMAL_STACK_SIZE,
                                        NULL,
-                                       tskIDLE_PRIORITY + 1,
+                                       tskIDLE_PRIORITY ,
                                        NULL );
     configASSERT( xTaskCreationResult == pdPASS );
 
@@ -86,7 +87,7 @@ static void prvTask1Function( void * pvParams )
     {
         fprintf( stderr, "Tutorial 8 task 1 running...\r\n" );
 
-        for( i = 0; i < 100000000; i++ )
+        for( i = 0; i < 1000000000; i++ )
         {
             /* This loop is just a very crude delay implementation. */
         }
@@ -103,7 +104,7 @@ static void prvTask2Function( void * pvParams )
 
     for( ;; )
     {
-        fprintf( stderr, "Tutorial 8 task 2 running...\r\n" );
+        fprintf( stderr, "***********************************Tutorial 8 task 2 running******************************...\r\n" );
 
         for( i = 0; i < 100000000; i++ )
         {
@@ -112,3 +113,4 @@ static void prvTask2Function( void * pvParams )
     }
 }
 /*-----------------------------------------------------------*/
+

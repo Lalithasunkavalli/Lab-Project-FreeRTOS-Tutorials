@@ -66,6 +66,8 @@ int main( void )
      */
     xCreatedTaskHandle = xTaskCreateStatic( prvTaskFunction, "Task1", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, &( xTaskStackBuffer[ 0 ] ), &( xTaskTcbBuffer ) );
     configASSERT( xCreatedTaskHandle != NULL );
+     printf( "Tutorial 3: Task created successfully.\r\n" );
+     fflush( stdout );
 
     /* TODO 2 - Call vTaskStartScheduler to start the scheduler. */
     vTaskStartScheduler();
