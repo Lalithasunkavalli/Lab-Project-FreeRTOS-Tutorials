@@ -58,8 +58,12 @@ int main( void )
      *
      * Assign the return value to xAutoReloadTimer.
      */
-
-    configASSERT( xAutoReloadTimer != NULL );
+        xAutoReloadTimer = xTimerCreate( "AutoTimer",
+                                     pdMS_TO_TICKS( 1000 ),
+                                     pdTRUE,
+                                     ( void * ) 1,
+                                     prvTimerCallback );
+            configASSERT( xAutoReloadTimer != NULL );
 
     /*
      * TODO 2 - Create a one-shot timer with 100 ms period using xTimerCreate
@@ -74,8 +78,13 @@ int main( void )
      *
      * Assign the return value to xOneShotTimer.
      */
+           xOneShotTimer = xTimerCreate( "OneTimer",
+                                   pdMS_TO_TICKS( 100 ),
+                                   pdFALSE,
+                                   ( void * ) 2,
+                                   prvTimerCallback );
 
-    configASSERT( xOneShotTimer != NULL );
+            configASSERT( xOneShotTimer != NULL );
 
     /*
      * TODO 3 - Start the auto-reload timer using xTimerStart API.
@@ -86,8 +95,8 @@ int main( void )
      *
      * Assign the return value to xTimerStartResult.
      */
-
-    configASSERT( xTimerStartResult == pdPASS );
+        xTimerStartResult = xTimerStart( xAutoReloadTimer, 0 );
+        configASSERT( xTimerStartResult == pdPASS );
 
     /*
      * TODO 4 - Start the one-shot timer using xTimerStart API.
@@ -98,8 +107,8 @@ int main( void )
      *
      * Assign the return value to xTimerStartResult.
      */
-
-    configASSERT( xTimerStartResult == pdPASS );
+        xTimerStartResult = xTimerStart( xOneShotTimer, 0 );
+        configASSERT( xTimerStartResult == pdPASS );
 
     /* Start the scheduler. */
     vTaskStartScheduler();
