@@ -72,8 +72,8 @@ int main( void )
      *
      * Assign the return value to xQueue.
      */
-
-    configASSERT( xQueue != NULL );
+    xQueue = xQueueCreate( 5, sizeof( UBaseType_t ) );
+        configASSERT( xQueue != NULL );
 
     /* Start the scheduler. */
     vTaskStartScheduler();
@@ -105,6 +105,7 @@ static void prvReceiverTask( void * pvParams )
          * pvBuffer         &( uxReceivedValue )
          * xTicksToWait     portMAX_DELAY
          */
+         xQueueReceive( xQueue, &( uxReceivedValue ), portMAX_DELAY );
 
 
         fprintf( stderr, "Value received from the queue: %lu\r\n", uxReceivedValue );
@@ -131,7 +132,7 @@ void vApplicationTickHook( void )
          *
          * Assign the return value to xQueueSendResult.
          */
-
+        xQueueSendResult = xQueueSendFromISR( xQueue, &( uxCounter ), &xHighPriorityTaskWoken );
         configASSERT( xQueueSendResult == pdPASS );
     }
 

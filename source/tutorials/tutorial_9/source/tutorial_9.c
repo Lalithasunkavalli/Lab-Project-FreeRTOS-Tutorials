@@ -141,10 +141,11 @@ static void prvReceiverTask( void * pvParams )
          * pvBuffer         &( uxReceivedValue )
          * xTicksToWait     portMAX_DELAY
          */
-xQueueReceive( xQueue, &( uxReceivedValue ), portMAX_DELAY );
+        xQueueReceive( xQueue, &( uxReceivedValue ), portMAX_DELAY );
 
         fprintf( stderr, "Value received from the queue: %lu\r\n", uxReceivedValue );
         fprintf( stderr, "Number of items in the queue: %lu.\r\n", uxQueueMessagesWaiting( xQueue ) );
+        vTaskDelay( pdMS_TO_TICKS( 1500 ) );
     }
 }
 /*-----------------------------------------------------------*/
