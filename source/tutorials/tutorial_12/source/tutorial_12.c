@@ -72,8 +72,8 @@ int main( void )
      *
      * Assign the return value to xSemaphore.
      */
-
-    configASSERT( xSemaphore != NULL );
+         xSemaphore = xSemaphoreCreateBinary();
+         configASSERT( xSemaphore != NULL );
 
     /* Start the scheduler. */
     vTaskStartScheduler();
@@ -103,7 +103,8 @@ static void prvTask1( void * pvParams )
          * xSemaphore   xSemaphore
          * xBlockTime   portMAX_DELAY
          */
-
+           BaseType_t xSemaphoreTakeResult = xSemaphoreTake( xSemaphore, portMAX_DELAY );
+           configASSERT( xSemaphoreTakeResult == pdTRUE );
         fprintf( stderr, "Task 1 is running...\r\n" );
     }
 
@@ -129,7 +130,8 @@ static void prvTask2( void * pvParams )
          *
          * Assign the return value to xSemaphoreGiveResult.
          */
-
+        xSemaphoreGiveResult = xSemaphoreGive( xSemaphore );
+        // Check if the semaphore was given successfully
         configASSERT( xSemaphoreGiveResult == pdPASS );
 
         fprintf( stderr, "Task 2 is running...\r\n" );
