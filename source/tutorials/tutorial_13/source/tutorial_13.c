@@ -72,7 +72,7 @@ int main( void )
      *
      * Assign the return value to xMutex.
      */
-
+    xMutex = xSemaphoreCreateMutex();
     configASSERT( xMutex != NULL );
 
     /* Start the scheduler. */
@@ -105,7 +105,9 @@ static void prvTask1( void * pvParams )
          * xSemaphore   xMutex
          * xBlockTime   portMAX_DELAY
          */
+         xSemaphoreTake( xMutex, portMAX_DELAY );
 
+        
         {
             fprintf( stderr, "Task 1 is running...\r\n" );
         }
@@ -117,7 +119,7 @@ static void prvTask1( void * pvParams )
          *
          * Assign the return value to xSemaphoreGiveResult.
          */
-
+        xSemaphoreGiveResult = xSemaphoreGive( xMutex );
         configASSERT( xSemaphoreGiveResult == pdPASS );
 
         vTaskDelay( pdMS_TO_TICKS( 1000 ) );
@@ -142,6 +144,7 @@ static void prvTask2( void * pvParams )
          * xSemaphore   xMutex
          * xBlockTime   portMAX_DELAY
          */
+        xSemaphoreTake( xMutex, portMAX_DELAY );
 
         {
             fprintf( stderr, "Task 2 is running...\r\n" );
@@ -154,7 +157,7 @@ static void prvTask2( void * pvParams )
          *
          * Assign the return value to xSemaphoreGiveResult.
          */
-
+        xSemaphoreGiveResult = xSemaphoreGive( xMutex );
         configASSERT( xSemaphoreGiveResult == pdPASS );
 
         vTaskDelay( pdMS_TO_TICKS( 1000 ) );
