@@ -106,7 +106,9 @@ static void prvEventGeneratorTask( void * pvParams )
          * eAction          eSetBits
          */
 
-
+        xTaskNotify( xEventHandlerTaskHandle,
+                      EVENT_1_BIT,
+                      eSetBits );
         vTaskDelay( pdMS_TO_TICKS( 500 ) );
 
         fprintf( stderr, "Generating event 2...\r\n" );
@@ -121,7 +123,9 @@ static void prvEventGeneratorTask( void * pvParams )
          * eAction          eSetBits
          */
 
-
+        xTaskNotify( xEventHandlerTaskHandle,
+                      EVENT_2_BIT,
+                      eSetBits );
         vTaskDelay( pdMS_TO_TICKS( 500 ) );
 
         fprintf( stderr, "Generated both events...\r\n" );
@@ -148,7 +152,10 @@ static void prvEventHandlerTask( void * pvParams )
          * xTicksToWait             portMAX_DELAY
          */
 
-
+        xTaskNotifyWait( 0,
+                         ~0UL,
+                         &( ulNotifiedValue ),
+                         portMAX_DELAY );
         if( ( ulNotifiedValue & EVENT_1_BIT ) != 0 )
         {
             fprintf( stderr, "Handling event 1...\r\n" );

@@ -76,7 +76,7 @@ int main( void )
      *
      * Assign the return value to xMessageBuffer.
      */
-
+    xMessageBuffer = xMessageBufferCreate( 20 );
     configASSERT( xMessageBuffer != NULL );
 
     /* Start the scheduler. */
@@ -116,7 +116,10 @@ static void prvReaderTask( void * pvParams )
          * Assign the return value to uxReceivedBytes.
          */
 
-
+        uxReceivedBytes = xMessageBufferReceive( xMessageBuffer,
+                                        &( ucRxData[ 0 ] ),
+                                        sizeof( ucRxData ),
+                                        portMAX_DELAY );
         fprintf( stderr, "Received message of %lu length...\r\n", uxReceivedBytes );
 
         for( i = 0; i < uxReceivedBytes; i++ )
@@ -154,7 +157,10 @@ static void prvWriterTask( void * pvParams )
          *
          * Assign the return value to uxSentBytes.
          */
-
+        uxSentBytes = xMessageBufferSend( xMessageBuffer,
+                                          &( ucMessage1[ 0 ] ),
+                                          sizeof( ucMessage1 ),
+                                          portMAX_DELAY );
         configASSERT( uxSentBytes == 5 );
 
         fprintf( stderr, "Sending second message...\r\n" );
@@ -171,7 +177,10 @@ static void prvWriterTask( void * pvParams )
          *
          * Assign the return value to uxSentBytes.
          */
-
+        uxSentBytes = xMessageBufferSend( xMessageBuffer,
+                                          &( ucMessage2[ 0 ] ),
+                                          sizeof( ucMessage2 ),
+                                          portMAX_DELAY );
         configASSERT( uxSentBytes == 4 );
 
         fprintf( stderr, "Finished sending both the messages.\r\n" );

@@ -76,7 +76,7 @@ int main( void )
      *
      * Assign the return value to xStreamBuffer.
      */
-
+    xStreamBuffer = xStreamBufferCreate( 10, 5 );
     configASSERT( xStreamBuffer != NULL );
 
     /* Start the scheduler. */
@@ -116,7 +116,10 @@ static void prvReaderTask( void * pvParams )
          * Assign the return value to uxReceivedBytes.
          */
 
-
+        uxReceivedBytes = xStreamBufferReceive( xStreamBuffer,
+                                                &( ucRxData[ 0 ] ),
+                                                sizeof( ucRxData ),
+                                                portMAX_DELAY );
         fprintf( stderr, "Received %lu byte(s)...\r\n", uxReceivedBytes );
 
         for( i = 0; i < uxReceivedBytes; i++ )
@@ -153,7 +156,10 @@ static void prvWriterTask( void * pvParams )
          *
          * Assign the return value to uxSentBytes.
          */
-
+        uxSentBytes = xStreamBufferSend( xStreamBuffer,
+                                         &( ucTxData[ 0 ] ),
+                                         1,
+                                         portMAX_DELAY );
         configASSERT( uxSentBytes == 1 );
 
         fprintf( stderr, "Sending 5 bytes...\r\n" );
@@ -170,7 +176,10 @@ static void prvWriterTask( void * pvParams )
          *
          * Assign the return value to uxSentBytes.
          */
-
+        uxSentBytes = xStreamBufferSend( xStreamBuffer,
+                                         &( ucTxData[ 1 ] ),
+                                         5,
+                                         portMAX_DELAY );
         configASSERT( uxSentBytes == 5 );
 
         fprintf( stderr, "Finished sending data.\r\n" );

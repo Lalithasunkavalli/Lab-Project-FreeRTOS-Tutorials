@@ -97,7 +97,7 @@ static void prvTask1( void * pvParams )
          * xTicksToWait         portMAX_DELAY
          */
 
-
+        ulTaskNotifyTake( pdTRUE, portMAX_DELAY );
         fprintf( stderr, "Task 1: Received notification...\r\n" );
     }
 }
@@ -119,7 +119,7 @@ static void prvTask2( void * pvParams )
          * xTaskToNotify    xTask1Handle
          */
 
-
+        xTaskNotifyGive( xTask1Handle );
         fprintf( stderr, "Task 2: Notified task 1...\r\n" );
 
         vTaskDelay( pdMS_TO_TICKS( 1000 ) );

@@ -88,7 +88,7 @@ int main( void )
      *
      * Assign the return value to xEventGroup.
      */
-
+    xEventGroup = xEventGroupCreate();
     configASSERT( xEventGroup != NULL );
 
     /* Start the scheduler. */
@@ -123,7 +123,7 @@ static void prvEventGeneratorTask( void * pvParams )
          * uxBitsToSet  EVENT_1_BIT
          */
 
-
+        xEventGroupSetBits( xEventGroup, EVENT_1_BIT );
         vTaskDelay( pdMS_TO_TICKS( 500 ) );
 
         fprintf( stderr, "Generating event 2...\r\n" );
@@ -136,7 +136,7 @@ static void prvEventGeneratorTask( void * pvParams )
          * xEventGroup  xEventGroup
          * uxBitsToSet  EVENT_2_BIT
          */
-
+        xEventGroupSetBits( xEventGroup, EVENT_2_BIT );
 
         fprintf( stderr, "Generated both the events...\r\n" );
 
@@ -166,7 +166,11 @@ static void prvEventHandlerTask1( void * pvParams )
          *
          * Assign the return value to xEventBitsValue.
          */
-
+        xEventBitsValue = xEventGroupWaitBits( xEventGroup,
+                                                ( EVENT_1_BIT | EVENT_2_BIT ),
+                                                pdTRUE,
+                                                pdTRUE,
+                                                portMAX_DELAY );
 
         if( ( xEventBitsValue & EVENT_1_BIT ) != 0 )
         {
@@ -202,7 +206,11 @@ static void prvEventHandlerTask2( void * pvParams )
          * Assign the return value to xEventBitsValue.
          */
 
-
+        xEventBitsValue = xEventGroupWaitBits( xEventGroup,
+                                                ( EVENT_1_BIT | EVENT_2_BIT ),
+                                                pdTRUE,
+                                                pdTRUE,
+                                                portMAX_DELAY );
         if( ( xEventBitsValue & EVENT_1_BIT ) != 0 )
         {
             fprintf( stderr, "Handler Task 2: Handling  event 1...\r\n" );

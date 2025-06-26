@@ -64,7 +64,7 @@ int main( void )
                                        "Task1",
                                        configMINIMAL_STACK_SIZE,
                                        NULL,
-                                       tskIDLE_PRIORITY,
+                                       tskIDLE_PRIORITY + 2,
                                        NULL );
     configASSERT( xTaskCreationResult == pdPASS );
 
@@ -72,7 +72,7 @@ int main( void )
                                        "Task2",
                                        configMINIMAL_STACK_SIZE,
                                        NULL,
-                                       tskIDLE_PRIORITY,
+                                       tskIDLE_PRIORITY + 3,
                                        NULL );
     configASSERT( xTaskCreationResult == pdPASS );
 
@@ -80,7 +80,7 @@ int main( void )
                                        "Task3",
                                        configMINIMAL_STACK_SIZE,
                                        NULL,
-                                       tskIDLE_PRIORITY,
+                                       tskIDLE_PRIORITY + 4,
                                        NULL );
     configASSERT( xTaskCreationResult == pdPASS );
 
@@ -89,7 +89,7 @@ int main( void )
      *
      * Assign the return value to xEventGroup.
      */
-
+    xEventGroup = xEventGroupCreate();
     configASSERT( xEventGroup != NULL );
 
     /* Start the scheduler. */
@@ -125,7 +125,10 @@ static void prvTask1( void * pvParams )
          * xTicksToWait     portMAX_DELAY
          */
 
-
+        xEventGroupSync( xEventGroup,
+                         TASK_1_BIT,
+                         ( TASK_1_BIT | TASK_2_BIT | TASK_3_BIT ),
+                         portMAX_DELAY );
         fprintf( stderr, "Task 1 exited sync point.\r\n" );
 
         vTaskDelay( pdMS_TO_TICKS( 1000 ) );
@@ -152,7 +155,10 @@ static void prvTask2( void * pvParams )
          * xTicksToWait     portMAX_DELAY
          */
 
-
+        xEventGroupSync( xEventGroup,
+                         TASK_2_BIT,
+                         ( TASK_1_BIT | TASK_2_BIT | TASK_3_BIT ),
+                         portMAX_DELAY );
         fprintf( stderr, "Task 2 exited sync point.\r\n" );
 
         vTaskDelay( pdMS_TO_TICKS( 1000 ) );
@@ -179,7 +185,10 @@ static void prvTask3( void * pvParams )
          * xTicksToWait     portMAX_DELAY
          */
 
-
+        xEventGroupSync( xEventGroup,
+                         TASK_3_BIT,
+                         ( TASK_1_BIT | TASK_2_BIT | TASK_3_BIT ),
+                         portMAX_DELAY );
         fprintf( stderr, "Task 3 exited sync point.\r\n" );
 
         vTaskDelay( pdMS_TO_TICKS( 1000 ) );
